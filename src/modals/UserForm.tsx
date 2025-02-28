@@ -1,188 +1,289 @@
 import React from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
 import { User } from '../interfaces/UserInterface';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import styles from '../styles/modules/Modal.module.css';
+import { useThemeStore } from '../store/themeStore';
+import { 
+  Person, 
+  Envelope, 
+  Building, 
+  GeoAlt, 
+  Telephone, 
+  Globe
+} from 'react-bootstrap-icons';
 
 interface UserFormProps {
   user: User;
   editMode: boolean;
-  onInputChange: (field: keyof User, value: string) => void;
-  onNestedInputChange: (parent: 'address' | 'company', field: string, value: string) => void;
+  onSubmit: (data: User) => void;
 }
 
 export const UserForm: React.FC<UserFormProps> = ({
   user,
   editMode,
-  onInputChange,
-  onNestedInputChange
+  onSubmit
 }) => {
-  const { register, formState: { errors } } = useForm<User>({
+  const { control, handleSubmit, formState: { errors } } = useForm<User>({
     defaultValues: user,
     mode: 'onChange'
   });
   
+  const theme = useThemeStore((state) => state.theme);
+  const isDarkMode = theme === 'dark';
+  
+  const formControlClass = `${styles.formControl} ${isDarkMode ? 'bg-dark text-light border-secondary' : ''}`;
+  
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)} id="userForm">
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">ID:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Person className="me-2" /> ID:
+        </Col>
         <Col>
           <Form.Control 
             plaintext 
             readOnly 
-            value={user.id} 
+            value={user.id}
+            className={isDarkMode ? 'text-light' : ''}
           />
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Name:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Person className="me-2" /> Name:
+        </Col>
         <Col>
-          <Form.Control 
-            {...register('name', { required: 'Name is required' })}
-            type="text" 
-            value={user.name} 
-            readOnly={!editMode}
-            plaintext={!editMode}
-            onChange={(e) => onInputChange('name', e.target.value)}
-            isInvalid={!!errors.name}
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: 'Name is required' }}
+            render={({ field }) => (
+              <Form.Control 
+                {...field}
+                type="text" 
+                readOnly={!editMode}
+                plaintext={!editMode}
+                isInvalid={!!errors.name}
+                className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+              />
+            )}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.name?.message}
-          </Form.Control.Feedback>
+          {errors.name && (
+            <Form.Control.Feedback type="invalid" className="d-block">
+              {errors.name?.message}
+            </Form.Control.Feedback>
+          )}
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Email:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Envelope className="me-2" /> Email:
+        </Col>
         <Col>
-          <Form.Control 
-            {...register('email', { 
+          <Controller
+            name="email"
+            control={control}
+            rules={{ 
               required: 'Email is required',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: 'Invalid email address'
               }
-            })}
-            type="email" 
-            value={user.email} 
-            readOnly={!editMode}
-            plaintext={!editMode}
-            onChange={(e) => onInputChange('email', e.target.value)}
-            isInvalid={!!errors.email}
+            }}
+            render={({ field }) => (
+              <Form.Control 
+                {...field}
+                type="email" 
+                readOnly={!editMode}
+                plaintext={!editMode}
+                isInvalid={!!errors.email}
+                className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+              />
+            )}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.email?.message}
-          </Form.Control.Feedback>
+          {errors.email && (
+            <Form.Control.Feedback type="invalid" className="d-block">
+              {errors.email?.message}
+            </Form.Control.Feedback>
+          )}
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Company:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Building className="me-2" /> Company:
+        </Col>
         <Col>
-          <Form.Control 
-            type="text" 
-            value={user.company?.name || ''} 
-            readOnly={!editMode}
-            plaintext={!editMode}
-            onChange={(e) => onNestedInputChange('company', 'name', e.target.value)}
+          <Controller
+            name="company.name"
+            control={control}
+            defaultValue={user.company?.name || ''}
+            render={({ field }) => (
+              <Form.Control 
+                {...field}
+                type="text" 
+                readOnly={!editMode}
+                plaintext={!editMode}
+                className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+              />
+            )}
           />
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Address:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <GeoAlt className="me-2" /> Address:
+        </Col>
         <Col>
-          <Form.Group className="mb-2">
-            <Form.Label className="mb-0">Street</Form.Label>
-            <Form.Control 
-              type="text" 
-              value={user.address?.street || ''} 
-              readOnly={!editMode}
-              plaintext={!editMode}
-              onChange={(e) => onNestedInputChange('address', 'street', e.target.value)}
-            />
-          </Form.Group>
-          
-          <Form.Group className="mb-2">
-            <Form.Label className="mb-0">Suite</Form.Label>
-            <Form.Control 
-              type="text" 
-              value={user.address?.suite || ''} 
-              readOnly={!editMode}
-              plaintext={!editMode}
-              onChange={(e) => onNestedInputChange('address', 'suite', e.target.value)}
-            />
-          </Form.Group>
-          
-          <Form.Group className="mb-2">
-            <Form.Label className="mb-0">City</Form.Label>
-            <Form.Control 
-              type="text" 
-              value={user.address?.city || ''} 
-              readOnly={!editMode}
-              plaintext={!editMode}
-              onChange={(e) => onNestedInputChange('address', 'city', e.target.value)}
-            />
-          </Form.Group>
-          
-          <Form.Group>
-            <Form.Label className="mb-0">Zipcode</Form.Label>
-            <Form.Control 
-              type="text" 
-              value={user.address?.zipcode || ''} 
-              readOnly={!editMode}
-              plaintext={!editMode}
-              onChange={(e) => onNestedInputChange('address', 'zipcode', e.target.value)}
-            />
-          </Form.Group>
+          <div className={`p-3 rounded ${isDarkMode ? 'bg-dark border border-secondary' : 'bg-light border'}`}>
+            <Form.Group className="mb-2">
+              <Form.Label className={`${styles.formLabel} ${isDarkMode ? 'text-light' : ''}`}>Street</Form.Label>
+              <Controller
+                name="address.street"
+                control={control}
+                defaultValue={user.address?.street || ''}
+                render={({ field }) => (
+                  <Form.Control 
+                    {...field}
+                    type="text" 
+                    readOnly={!editMode}
+                    plaintext={!editMode}
+                    className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+                  />
+                )}
+              />
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+              <Form.Label className={`${styles.formLabel} ${isDarkMode ? 'text-light' : ''}`}>Suite</Form.Label>
+              <Controller
+                name="address.suite"
+                control={control}
+                defaultValue={user.address?.suite || ''}
+                render={({ field }) => (
+                  <Form.Control 
+                    {...field}
+                    type="text" 
+                    readOnly={!editMode}
+                    plaintext={!editMode}
+                    className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+                  />
+                )}
+              />
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+              <Form.Label className={`${styles.formLabel} ${isDarkMode ? 'text-light' : ''}`}>City</Form.Label>
+              <Controller
+                name="address.city"
+                control={control}
+                defaultValue={user.address?.city || ''}
+                render={({ field }) => (
+                  <Form.Control 
+                    {...field}
+                    type="text" 
+                    readOnly={!editMode}
+                    plaintext={!editMode}
+                    className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+                  />
+                )}
+              />
+            </Form.Group>
+            
+            <Form.Group>
+              <Form.Label className={`${styles.formLabel} ${isDarkMode ? 'text-light' : ''}`}>Zipcode</Form.Label>
+              <Controller
+                name="address.zipcode"
+                control={control}
+                defaultValue={user.address?.zipcode || ''}
+                render={({ field }) => (
+                  <Form.Control 
+                    {...field}
+                    type="text" 
+                    readOnly={!editMode}
+                    plaintext={!editMode}
+                    className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+                  />
+                )}
+              />
+            </Form.Group>
+          </div>
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Phone:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Telephone className="me-2" /> Phone:
+        </Col>
         <Col>
-          <Form.Control 
-            {...register('phone', {
+          <Controller
+            name="phone"
+            control={control}
+            defaultValue={user.phone || ''}
+            rules={{
               pattern: {
                 value: /^[0-9-.()+\s]*$/,
                 message: 'Invalid phone number format'
               }
-            })}
-            type="text" 
-            value={user.phone || ''} 
-            readOnly={!editMode}
-            plaintext={!editMode}
-            onChange={(e) => onInputChange('phone', e.target.value)}
-            isInvalid={!!errors.phone}
+            }}
+            render={({ field }) => (
+              <Form.Control 
+                {...field}
+                type="text" 
+                readOnly={!editMode}
+                plaintext={!editMode}
+                isInvalid={!!errors.phone}
+                className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+              />
+            )}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.phone?.message}
-          </Form.Control.Feedback>
+          {errors.phone && (
+            <Form.Control.Feedback type="invalid" className="d-block">
+              {errors.phone?.message}
+            </Form.Control.Feedback>
+          )}
         </Col>
       </Row>
       
       <Row className="mb-3">
-        <Col sm={4} className="fw-bold">Website:</Col>
+        <Col sm={4} className="fw-bold d-flex align-items-center">
+          <Globe className="me-2" /> Website:
+        </Col>
         <Col>
-          <Form.Control 
-            {...register('website', {
+          <Controller
+            name="website"
+            control={control}
+            defaultValue={user.website || ''}
+            rules={{
               pattern: {
                 value: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/,
                 message: 'Invalid website URL'
               }
-            })}
-            type="text" 
-            value={user.website || ''} 
-            readOnly={!editMode}
-            plaintext={!editMode}
-            onChange={(e) => onInputChange('website', e.target.value)}
-            isInvalid={!!errors.website}
+            }}
+            render={({ field }) => (
+              <Form.Control 
+                {...field}
+                type="text" 
+                readOnly={!editMode}
+                plaintext={!editMode}
+                isInvalid={!!errors.website}
+                className={editMode ? formControlClass : isDarkMode ? 'text-light' : ''}
+              />
+            )}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.website?.message}
-          </Form.Control.Feedback>
+          {errors.website && (
+            <Form.Control.Feedback type="invalid" className="d-block">
+              {errors.website?.message}
+            </Form.Control.Feedback>
+          )}
         </Col>
       </Row>
+      
+
     </Form>
   );
 };

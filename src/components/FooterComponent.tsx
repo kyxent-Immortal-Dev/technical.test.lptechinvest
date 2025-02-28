@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import { Github, Linkedin, Twitter, EnvelopeFill, GeoAltFill, TelephoneFill, ArrowRightCircleFill } from 'react-bootstrap-icons';
+import { Github, Linkedin, EnvelopeFill, GeoAltFill, TelephoneFill, ArrowRightCircleFill, Globe } from 'react-bootstrap-icons';
 import { useThemeStore } from '../store/themeStore';
 import '../styles/modules/Footer.css';
 
@@ -16,7 +16,7 @@ const FooterComponent: React.FC = () => {
             <div className="footer-brand mb-4">
               <div className="d-flex align-items-center mb-3">
                 <div className="footer-logo-circle">UM</div>
-                <h4 className="ms-2 mb-0">User Management</h4>
+                <h4 className="ms-2 mb-0">lp.tech.invest</h4>
               </div>
               <p className="footer-description">
                 A powerful application to manage your users with ease. Built with React, 
@@ -26,15 +26,15 @@ const FooterComponent: React.FC = () => {
             <div className="footer-contact">
               <div className="d-flex align-items-center mb-2">
                 <GeoAltFill className="footer-icon me-2" />
-                <p className="mb-0">123 Tech Street, Silicon Valley, CA</p>
+                <p className="mb-0">El Salvador</p>
               </div>
               <div className="d-flex align-items-center mb-2">
                 <TelephoneFill className="footer-icon me-2" />
-                <p className="mb-0">+1 (123) 456-7890</p>
+                <p className="mb-0">+503 7777 4551</p>
               </div>
               <div className="d-flex align-items-center">
                 <EnvelopeFill className="footer-icon me-2" />
-                <p className="mb-0">contact@usermanagement.com</p>
+                <p className="mb-0">humbertoezequiel.z.c@gmail.com</p>
               </div>
             </div>
           </Col>
@@ -78,14 +78,14 @@ const FooterComponent: React.FC = () => {
             
             <h5 className="footer-heading mt-4 mb-3">Connect With Us</h5>
             <div className="social-icons">
-              <a href="#github" aria-label="Github">
+              <a href="https://github.com/kyxent-Immortal-Dev" aria-label="Github">
                 <Github size={20} />
               </a>
-              <a href="#linkedin" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/kyxent-immortal" aria-label="LinkedIn">
                 <Linkedin size={20} />
               </a>
-              <a href="#twitter" aria-label="Twitter">
-                <Twitter size={20} />
+              <a href="https://portafolio-ezequiel-campos.netlify.app" aria-label="Web Page">
+                <Globe size={20} />
               </a>
             </div>
           </Col>
@@ -96,7 +96,7 @@ const FooterComponent: React.FC = () => {
         <Row className="py-3 copyright-row">
           <Col md={6} className="text-center text-md-start mb-2 mb-md-0">
             <p className="mb-0">
-              &copy; {year} User Management. All rights reserved.
+              &copy; {year} Humberto Campos. All rights reserved.
             </p>
           </Col>
           <Col md={6} className="text-center text-md-end">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Pencil, Trash, Save, X } from 'react-bootstrap-icons';
+import { Pencil, Trash, Save, X, ArrowLeft } from 'react-bootstrap-icons';
 
 interface ModalFooterProps {
   editMode: boolean;
@@ -23,23 +23,23 @@ export const ModalFooter: React.FC<ModalFooterProps> = ({
     <>
       {editMode ? (
         <>
-          <Button variant="success" onClick={onSave}>
-            <Save className="me-1" /> Save
+          <Button variant="success" onClick={onSave} className="d-flex align-items-center">
+            <Save className="me-2" size={18} /> Save Changes
           </Button>
-          <Button variant="secondary" onClick={onCancel}>
-            <X className="me-1" /> Cancel
+          <Button variant="secondary" onClick={onCancel} className="d-flex align-items-center">
+            <X className="me-2" size={18} /> Cancel
           </Button>
         </>
       ) : (
         <>
-          <Button variant="outline-primary" onClick={onEdit}>
-            <Pencil className="me-1" /> Edit
+          <Button variant="outline-primary" onClick={onEdit} className="d-flex align-items-center">
+            <Pencil className="me-2" size={18} /> Edit
           </Button>
-          <Button variant="outline-danger" onClick={onDelete}>
-            <Trash className="me-1" /> Delete
+          <Button variant="outline-danger" onClick={onDelete} className="d-flex align-items-center">
+            <Trash className="me-2" size={18} /> Delete
           </Button>
-          <Button variant="secondary" onClick={onClose}>
-            Close
+          <Button variant="secondary" onClick={onClose} className="d-flex align-items-center">
+            <ArrowLeft className="me-2" size={18} /> Close
           </Button>
         </>
       )}

@@ -1,8 +1,10 @@
-import { Modal } from 'react-bootstrap';
+import { Modal, Badge } from 'react-bootstrap';
 import { User } from '../interfaces/UserInterface';
 import { useUserForm } from '../hooks/useUserForm';
 import { UserForm } from './UserForm';
 import { ModalFooter } from './ModalFooter';
+import styles from '../styles/modules/Modal.module.css';
+import { useThemeStore } from '../store/themeStore';
 
 interface UserDetailModalProps {
   user: User | null;
@@ -12,21 +14,18 @@ interface UserDetailModalProps {
   onUserUpdated: (user: User) => void;
 }
 
-export default function UserDetailModal({ 
-  user, 
-  show, 
-  onHide, 
+export default function UserDetailModal({
+  user,
+  show,
+  onHide,
   onUserDeleted,
-  onUserUpdated 
+  onUserUpdated
 }: UserDetailModalProps) {
-  
   const {
     editMode,
     updatedUser,
     handleEdit,
     handleCancel,
-    handleInputChange,
-    handleNestedInputChange,
     handleSave,
     handleDelete
   } = useUserForm({
@@ -36,27 +35,64 @@ export default function UserDetailModal({
     onClose: onHide
   });
 
+  const theme = useThemeStore((state) => state.theme);
+  const isDarkMode = theme === 'dark';
+
   if (!user || !updatedUser) return null;
 
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase();
+  };
+
+
+  const handleFormSubmit = () => {
+    handleSave();
+  };
+
   return (
-    <Modal show={show} onHide={onHide} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>{editMode ? 'Edit User' : 'User Details'}</Modal.Title>
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      contentClassName={`${styles.modalContent} ${isDarkMode ? styles.darkModal : ''}`}
+      className={styles.modal}
+    >
+      <Modal.Header
+        closeButton
+        className={`${isDarkMode ? styles.darkModalHeader : ''}`}
+      >
+        <Modal.Title className="d-flex align-items-center">
+          <div className={styles.avatar}>
+            {getInitials(updatedUser.name)}
+          </div>
+          <div className="ms-3">
+            <div>{editMode ? 'Edit User' : 'User Details'}</div>
+            <Badge
+              bg={editMode ? "warning" : "info"}
+              className="mt-1"
+            >
+              {editMode ? 'Editing Mode' : `User ID: ${updatedUser.id}`}
+            </Badge>
+          </div>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <UserForm
           user={updatedUser}
           editMode={editMode}
-          onInputChange={handleInputChange}
-          onNestedInputChange={handleNestedInputChange}
+          onSubmit={handleFormSubmit}
         />
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className={isDarkMode ? styles.darkModalFooter : ''}>
         <ModalFooter
           editMode={editMode}
           onEdit={handleEdit}
           onCancel={handleCancel}
-          onSave={handleSave}
+          onSave={() => document.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))}
           onDelete={handleDelete}
           onClose={onHide}
         />

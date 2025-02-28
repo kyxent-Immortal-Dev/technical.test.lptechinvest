@@ -40,7 +40,7 @@ const NavbarComponent: React.FC = () => {
           <Navbar.Brand href="#home" className="brand-text">
             <div className="logo-container">
               <div className="logo-circle">UM</div>
-              <span className="ms-2">User Management</span>
+              <span className="ms-2">lp.tech.invest</span>
             </div>
           </Navbar.Brand>
           

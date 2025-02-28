@@ -87,7 +87,7 @@
     margin-top: 72px; 
   }
   
-  /* Mobile responsiveness */
+
   @media (max-width: 992px) {
     .nav-link-custom {
       margin: 0.5rem 0;
