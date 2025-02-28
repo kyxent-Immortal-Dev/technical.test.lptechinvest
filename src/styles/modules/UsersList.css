@@ -1,0 +1,174 @@
+
+.user-list-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-count-badge {
+    font-size: 0.9rem;
+    border-radius: 50px;
+    padding: 0.35rem 0.7rem;
+    background: linear-gradient(135deg, #4a6fff, #2e3cb8);
+  }
+  
+  .search-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .search-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-table-container {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  }
+  
+  .user-table {
+    margin-bottom: 0;
+  }
+  
+  .user-th {
+    cursor: pointer;
+    background-color: #f8f9fa;
+    position: relative;
+    padding: 12px 15px;
+    font-weight: 600;
+  }
+  
+  .user-table.table-dark .user-th {
+    background-color: #343a40;
+  }
+  
+  .user-th:hover {
+    background-color: #e9ecef;
+  }
+  
+  .user-table.table-dark .user-th:hover {
+    background-color: #2c3136;
+  }
+  
+  .user-tr {
+    transition: all 0.2s ease;
+  }
+  
+  .user-tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1;
+    position: relative;
+  }
+  
+  .user-button {
+    border-radius: 50px;
+    padding: 0.375rem 0.75rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #4a6fff, #2e3cb8);
+    border: none;
+  }
+  
+  .user-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 111, 255, 0.4);
+    background: linear-gradient(135deg, #3a5cd8, #202b8c);
+  }
+  
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a6fff, #2e3cb8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .user-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-card-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a6fff, #2e3cb8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .user-info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  .user-card.bg-dark .user-info-item {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .user-alert {
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .custom-spinner {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .view-toggle .btn {
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+  
+  .view-toggle .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .user-card-container {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+
+  @media (max-width: 768px) {
+    .user-list-title {
+      font-size: 1.5rem;
+    }
+    
+    .user-card-container {
+      margin-top: 1rem;
+    }
+  }
