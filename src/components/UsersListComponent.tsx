@@ -10,6 +10,7 @@ import TableUsers from './TableUsers';
 import CardUsers from './CardUsers';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorMessage from './ErrorMessage';
+import CreateUserModal from '../modals/CreateUserModal';
 
 export default function UsersListComponent() {
 
@@ -136,6 +137,9 @@ export default function UsersListComponent() {
     return <ErrorMessage error={error} onRetry={() => window.location.reload()} />;
   }
 
+  const handleUserCreated = () => {
+  };
+
   return (
     <Container className="mt-4 mb-5">
   
@@ -146,6 +150,9 @@ export default function UsersListComponent() {
           </Badge>
           User Management
         </h2>
+
+
+
         
         <div className="d-flex align-items-center mt-3 mt-md-0">
           <div className="view-toggle me-3">
@@ -195,6 +202,11 @@ export default function UsersListComponent() {
           </InputGroup>
         </Card.Body>
       </Card>
+      
+      <div className="d-flex justify-content-between align-items-center">
+            
+            <CreateUserModal onUserCreated={handleUserCreated} />
+        </div>
       
 
       {filteredUsers.length === 0 ? (

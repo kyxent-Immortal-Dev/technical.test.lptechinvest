@@ -19,7 +19,7 @@ const FooterComponent: React.FC = () => {
                 <h4 className="ms-2 mb-0">lp.tech.invest</h4>
               </div>
               <p className="footer-description">
-                A powerful application to manage your users with ease. Built with React, 
+                A powerful application to manage your users with ease. Built with Typescript, React, 
                 Bootstrap, and Zustand for a seamless user experience.
               </p>
             </div>
