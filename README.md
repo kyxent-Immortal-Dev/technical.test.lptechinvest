@@ -33,7 +33,7 @@ VITE_BACKEND_URI = "https://jsonplaceholder.typicode.com"
 ### Versión en Producción
 Puedes ver la aplicación desplegada en producción haciendo clic en el siguiente enlace:
 
-[![Ver Demo](https://img.shields.io/badge/Ver%20Demo-Aplicación%20Desplegada-blue?style=for-the-badge)](https://tu-link-aqui.com)
+[![Ver Demo](https://img.shields.io/badge/Ver%20Demo-Aplicación%20Desplegada-blue?style=for-the-badge)](https://ip-tech-invest-ezequielcampos.netlify.app)
 
 ---
 
@@ -70,7 +70,7 @@ VITE_BACKEND_URI = "https://jsonplaceholder.typicode.com"
 ### Production Version
 You can see the deployed application in production by clicking on the following link:
 
-[![View Demo](https://img.shields.io/badge/View%20Demo-Deployed%20Application-blue?style=for-the-badge)](https://your-link-here.com)
+[![View Demo](https://img.shields.io/badge/View%20Demo-Deployed%20Application-blue?style=for-the-badge)](https://ip-tech-invest-ezequielcampos.netlify.app)
 
 ---
 
