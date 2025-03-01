@@ -34,3 +34,20 @@ body {
   [data-bs-theme="dark"] {
     color-scheme: dark;
   }
+
+
+
+
+
+
+.swal2-popup {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .swal2-styled.swal2-confirm {
+  background-color: #0d6efd;
+}
+
+[data-bs-theme="dark"] .swal2-timer-progress-bar {
+  background: rgba(255, 255, 255, 0.3);
+}

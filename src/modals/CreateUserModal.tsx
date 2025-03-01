@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { User } from '../interfaces/UserInterface';
 import { UsersService } from '../services/api/Users.service';
-import Swal from 'sweetalert2';
 import { useThemeStore } from '../store/themeStore';
 import { PersonPlus } from 'react-bootstrap-icons';
 import UserFormCreate from './UserFormCreate';
+import { showAlert } from '../utils/sweetalert';
 
 interface CreateUserModalProps {
   onUserCreated: (user: User) => void;
@@ -28,7 +28,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onUserCreated }) => {
     try {
       const response = await UsersService.create(data);
       
-      Swal.fire({
+      showAlert({
         title: 'Success!',
         text: 'User created successfully',
         icon: 'success',
@@ -38,7 +38,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onUserCreated }) => {
       onUserCreated(response.data);
       handleClose();
     } catch (error) {
-      Swal.fire({
+      showAlert({
         title: 'Error!',
         text: 'Failed to create user',
         icon: 'error',
@@ -64,7 +64,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ onUserCreated }) => {
         show={show}
         onHide={handleClose}
         backdrop="static"
-        keyboard={true} // Permite cerrar con ESC
+        keyboard={true} 
         size="lg"
         centered
         className={isDarkMode ? 'modal-dark' : ''}

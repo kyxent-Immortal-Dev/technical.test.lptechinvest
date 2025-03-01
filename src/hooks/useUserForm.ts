@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { User } from '../interfaces/UserInterface';
 import { UsersService } from '../services/api/Users.service';
-import Swal from 'sweetalert2';
+import { showAlert } from '../utils/sweetalert';
 
 interface UseUserFormProps {
   user: User | null;
@@ -74,78 +74,77 @@ export const useUserForm = ({
     });
   };
 
-  const handleSave = async () => {
-    try {
-      if (updatedUser && user) {
-        await UsersService.updateById(updatedUser.id, updatedUser);
-        
-        Swal.fire({
-          title: 'Success!',
-          text: 'User updated successfully',
-          icon: 'success',
-          timer: 2000,
-          timerProgressBar: true
-        });
-        
-        if (onUserUpdated) {
-          onUserUpdated(updatedUser);
-        }
-        
-        setEditMode(false);
-      }
-    } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: `Failed to update user: ${error}`,
-        icon: 'error'
-      });
-      console.error('Error updating user:', error);
-    }
-  };
 
-  const handleDelete = async () => {
-    try {
-      if (!user) return;
+
+const handleSave = async () => {
+  try {
+    if (updatedUser && user) {
+      await UsersService.updateById(updatedUser.id, updatedUser);
       
-      const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+      showAlert({
+        title: 'Success!',
+        text: 'User updated successfully',
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true
       });
       
-      if (result.isConfirmed) {
-        await UsersService.deleteById(user.id);
-        
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'User has been deleted.',
-          icon: 'success',
-          timer: 2000,
-          timerProgressBar: true
-        });
-        
-        if (onUserDeleted) {
-          onUserDeleted(user.id);
-        }
-        
-        if (onClose) {
-          onClose();
-        }
+      if (onUserUpdated) {
+        onUserUpdated(updatedUser);
       }
-    } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: `Failed to delete user: ${error}`,
-        icon: 'error'
-      });
-      console.error('Error deleting user:', error);
+      setEditMode(false);
     }
-  };
+  } catch (error) {
+    showAlert({
+      title: 'Error!',
+      text: `Failed to update user: ${error}`,
+      icon: 'error'
+    });
+    console.error('Error updating user:', error);
+  }
+};
 
+const handleDelete = async () => {
+  try {
+    if (!user) return;
+    
+    const result = await showAlert({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+    
+    if (result.isConfirmed) {
+      await UsersService.deleteById(user.id);
+      
+      showAlert({
+        title: 'Deleted!',
+        text: 'User has been deleted.',
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true
+      });
+      
+      if (onUserDeleted) {
+        onUserDeleted(user.id);
+      }
+      if (onClose) {
+        onClose();
+      }
+    }
+  } catch (error) {
+    showAlert({
+      title: 'Error!',
+      text: `Failed to delete user: ${error}`,
+      icon: 'error'
+    });
+    console.error('Error deleting user:', error);
+  }
+};
   return {
     editMode,
     updatedUser,
